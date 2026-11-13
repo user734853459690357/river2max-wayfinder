@@ -1,0 +1,708 @@
+{
+ "uid": "river2max",
+ "title": "River 2 Max \u2014 Test Cycle",
+ "timezone": "browser",
+ "refresh": "10s",
+ "time": {
+  "from": "now-3h",
+  "to": "now"
+ },
+ "schemaVersion": 39,
+ "panels": [
+  {
+   "id": 1,
+   "type": "stat",
+   "title": "Online",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prom"
+   },
+   "gridPos": {
+    "x": 0,
+    "y": 0,
+    "w": 4,
+    "h": 4
+   },
+   "fieldConfig": {
+    "defaults": {},
+    "overrides": []
+   },
+   "options": {
+    "reduceOptions": {
+     "calcs": [
+      "lastNotNull"
+     ]
+    },
+    "colorMode": "none",
+    "graphMode": "none"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "ecoflow_online"
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "type": "stat",
+   "title": "Displayed SoC",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prom"
+   },
+   "gridPos": {
+    "x": 4,
+    "y": 0,
+    "w": 4,
+    "h": 4
+   },
+   "fieldConfig": {
+    "defaults": {
+     "unit": "percent",
+     "decimals": 1
+    },
+    "overrides": []
+   },
+   "options": {
+    "reduceOptions": {
+     "calcs": [
+      "lastNotNull"
+     ]
+    },
+    "colorMode": "none",
+    "graphMode": "none"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "ecoflow_bms_ems_status_f32_lcd_show_soc"
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "type": "stat",
+   "title": "Output",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prom"
+   },
+   "gridPos": {
+    "x": 8,
+    "y": 0,
+    "w": 4,
+    "h": 4
+   },
+   "fieldConfig": {
+    "defaults": {
+     "unit": "watt"
+    },
+    "overrides": []
+   },
+   "options": {
+    "reduceOptions": {
+     "calcs": [
+      "lastNotNull"
+     ]
+    },
+    "colorMode": "none",
+    "graphMode": "none"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "ecoflow_pd_watts_out_sum"
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "type": "stat",
+   "title": "Cycles",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prom"
+   },
+   "gridPos": {
+    "x": 12,
+    "y": 0,
+    "w": 4,
+    "h": 4
+   },
+   "fieldConfig": {
+    "defaults": {},
+    "overrides": []
+   },
+   "options": {
+    "reduceOptions": {
+     "calcs": [
+      "lastNotNull"
+     ]
+    },
+    "colorMode": "none",
+    "graphMode": "none"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "ecoflow_bms_bms_status_cycles"
+    }
+   ]
+  },
+  {
+   "id": 5,
+   "type": "stat",
+   "title": "Full / design capacity",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prom"
+   },
+   "gridPos": {
+    "x": 16,
+    "y": 0,
+    "w": 4,
+    "h": 4
+   },
+   "fieldConfig": {
+    "defaults": {
+     "unit": "percent",
+     "decimals": 1
+    },
+    "overrides": []
+   },
+   "options": {
+    "reduceOptions": {
+     "calcs": [
+      "lastNotNull"
+     ]
+    },
+    "colorMode": "none",
+    "graphMode": "none"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "100*ecoflow_bms_bms_status_full_cap/ecoflow_bms_bms_status_design_cap"
+    }
+   ]
+  },
+  {
+   "id": 6,
+   "type": "stat",
+   "title": "Cell spread",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prom"
+   },
+   "gridPos": {
+    "x": 20,
+    "y": 0,
+    "w": 4,
+    "h": 4
+   },
+   "fieldConfig": {
+    "defaults": {
+     "unit": "mvolt"
+    },
+    "overrides": []
+   },
+   "options": {
+    "reduceOptions": {
+     "calcs": [
+      "lastNotNull"
+     ]
+    },
+    "colorMode": "none",
+    "graphMode": "none"
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "ecoflow_bms_bms_status_max_cell_vol-ecoflow_bms_bms_status_min_cell_vol"
+    }
+   ]
+  },
+  {
+   "id": 10,
+   "type": "timeseries",
+   "title": "SoC: displayed vs BMS",
+   "description": "",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prom"
+   },
+   "gridPos": {
+    "x": 0,
+    "y": 4,
+    "w": 12,
+    "h": 8
+   },
+   "fieldConfig": {
+    "defaults": {
+     "custom": {
+      "lineWidth": 2,
+      "showPoints": "never",
+      "spanNulls": false
+     },
+     "unit": "percent"
+    },
+    "overrides": []
+   },
+   "options": {
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "ecoflow_bms_ems_status_f32_lcd_show_soc",
+     "legendFormat": "Displayed SoC (LCD)"
+    },
+    {
+     "refId": "B",
+     "expr": "ecoflow_bms_bms_status_f32_show_soc",
+     "legendFormat": "BMS show SoC"
+    },
+    {
+     "refId": "C",
+     "expr": "ecoflow_bms_bms_status_soc",
+     "legendFormat": "BMS SoC"
+    },
+    {
+     "refId": "D",
+     "expr": "ecoflow_pd_soc",
+     "legendFormat": "PD SoC"
+    }
+   ]
+  },
+  {
+   "id": 11,
+   "type": "timeseries",
+   "title": "Cell voltage min / max",
+   "description": "No per-cell data; min/max is the only imbalance signal. LFP: ~3.2\u20133.3 V flat, knee below ~3.0 V, BMS cutoff typically ~2.5 V.",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prom"
+   },
+   "gridPos": {
+    "x": 12,
+    "y": 4,
+    "w": 12,
+    "h": 8
+   },
+   "fieldConfig": {
+    "defaults": {
+     "custom": {
+      "lineWidth": 2,
+      "showPoints": "never",
+      "spanNulls": false
+     },
+     "unit": "mvolt"
+    },
+    "overrides": []
+   },
+   "options": {
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "ecoflow_bms_bms_status_min_cell_vol",
+     "legendFormat": "min cell"
+    },
+    {
+     "refId": "B",
+     "expr": "ecoflow_bms_bms_status_max_cell_vol",
+     "legendFormat": "max cell"
+    }
+   ]
+  },
+  {
+   "id": 12,
+   "type": "timeseries",
+   "title": "Cell spread (max \u2212 min)",
+   "description": "",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prom"
+   },
+   "gridPos": {
+    "x": 0,
+    "y": 12,
+    "w": 12,
+    "h": 8
+   },
+   "fieldConfig": {
+    "defaults": {
+     "custom": {
+      "lineWidth": 2,
+      "showPoints": "never",
+      "spanNulls": false
+     },
+     "unit": "mvolt"
+    },
+    "overrides": []
+   },
+   "options": {
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "ecoflow_bms_bms_status_max_cell_vol-ecoflow_bms_bms_status_min_cell_vol",
+     "legendFormat": "spread"
+    }
+   ]
+  },
+  {
+   "id": 13,
+   "type": "timeseries",
+   "title": "Power in / out",
+   "description": "",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prom"
+   },
+   "gridPos": {
+    "x": 12,
+    "y": 12,
+    "w": 12,
+    "h": 8
+   },
+   "fieldConfig": {
+    "defaults": {
+     "custom": {
+      "lineWidth": 2,
+      "showPoints": "never",
+      "spanNulls": false
+     },
+     "unit": "watt"
+    },
+    "overrides": []
+   },
+   "options": {
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "ecoflow_pd_watts_out_sum",
+     "legendFormat": "out"
+    },
+    {
+     "refId": "B",
+     "expr": "ecoflow_pd_watts_in_sum",
+     "legendFormat": "in"
+    }
+   ]
+  },
+  {
+   "id": 14,
+   "type": "timeseries",
+   "title": "Pack current & voltage (coarse, whole A / V)",
+   "description": "bms amp/vol arrive as integers; 8\u00d7min cell shows sag at finer resolution.",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prom"
+   },
+   "gridPos": {
+    "x": 0,
+    "y": 20,
+    "w": 12,
+    "h": 8
+   },
+   "fieldConfig": {
+    "defaults": {
+     "custom": {
+      "lineWidth": 2,
+      "showPoints": "never",
+      "spanNulls": false
+     }
+    },
+    "overrides": []
+   },
+   "options": {
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "ecoflow_bms_bms_status_amp",
+     "legendFormat": "current A (neg = discharge)"
+    },
+    {
+     "refId": "B",
+     "expr": "ecoflow_bms_bms_status_vol",
+     "legendFormat": "pack V"
+    },
+    {
+     "refId": "C",
+     "expr": "8*ecoflow_bms_bms_status_min_cell_vol/1000",
+     "legendFormat": "8 \u00d7 min cell V"
+    }
+   ]
+  },
+  {
+   "id": 15,
+   "type": "timeseries",
+   "title": "Capacity (mAh)",
+   "description": "",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prom"
+   },
+   "gridPos": {
+    "x": 12,
+    "y": 20,
+    "w": 12,
+    "h": 8
+   },
+   "fieldConfig": {
+    "defaults": {
+     "custom": {
+      "lineWidth": 2,
+      "showPoints": "never",
+      "spanNulls": false
+     }
+    },
+    "overrides": []
+   },
+   "options": {
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "ecoflow_bms_bms_status_remain_cap",
+     "legendFormat": "remaining"
+    },
+    {
+     "refId": "B",
+     "expr": "ecoflow_bms_bms_status_full_cap",
+     "legendFormat": "full"
+    },
+    {
+     "refId": "C",
+     "expr": "ecoflow_bms_bms_status_design_cap",
+     "legendFormat": "design"
+    }
+   ]
+  },
+  {
+   "id": 16,
+   "type": "timeseries",
+   "title": "Temperatures",
+   "description": "",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prom"
+   },
+   "gridPos": {
+    "x": 0,
+    "y": 28,
+    "w": 12,
+    "h": 8
+   },
+   "fieldConfig": {
+    "defaults": {
+     "custom": {
+      "lineWidth": 2,
+      "showPoints": "never",
+      "spanNulls": false
+     },
+     "unit": "celsius"
+    },
+    "overrides": []
+   },
+   "options": {
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "ecoflow_bms_bms_status_min_cell_temp",
+     "legendFormat": "cell min"
+    },
+    {
+     "refId": "B",
+     "expr": "ecoflow_bms_bms_status_max_cell_temp",
+     "legendFormat": "cell max"
+    },
+    {
+     "refId": "C",
+     "expr": "ecoflow_bms_bms_status_max_mos_temp",
+     "legendFormat": "MOS max"
+    },
+    {
+     "refId": "D",
+     "expr": "ecoflow_mppt_car_temp",
+     "legendFormat": "mppt/car"
+    }
+   ]
+  },
+  {
+   "id": 17,
+   "type": "timeseries",
+   "title": "Protection / fault flags",
+   "description": "",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prom"
+   },
+   "gridPos": {
+    "x": 12,
+    "y": 28,
+    "w": 12,
+    "h": 8
+   },
+   "fieldConfig": {
+    "defaults": {
+     "custom": {
+      "lineWidth": 2,
+      "showPoints": "never",
+      "spanNulls": false
+     }
+    },
+    "overrides": []
+   },
+   "options": {
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "ecoflow_bms_bms_status_bms_fault",
+     "legendFormat": "bms_fault"
+    },
+    {
+     "refId": "B",
+     "expr": "ecoflow_bms_bms_status_err_code",
+     "legendFormat": "bms err_code"
+    },
+    {
+     "refId": "C",
+     "expr": "ecoflow_bms_bms_status_bq_sys_stat_reg",
+     "legendFormat": "bq_sys_stat_reg"
+    },
+    {
+     "refId": "D",
+     "expr": "ecoflow_bms_ems_status_bms_war_state",
+     "legendFormat": "bms_war_state"
+    },
+    {
+     "refId": "E",
+     "expr": "ecoflow_bms_ems_status_dsg_cmd",
+     "legendFormat": "dsg_cmd"
+    },
+    {
+     "refId": "F",
+     "expr": "ecoflow_bms_ems_status_chg_cmd",
+     "legendFormat": "chg_cmd"
+    },
+    {
+     "refId": "G",
+     "expr": "ecoflow_pd_err_code",
+     "legendFormat": "pd err_code"
+    }
+   ]
+  },
+  {
+   "id": 18,
+   "type": "timeseries",
+   "title": "Telemetry health",
+   "description": "",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prom"
+   },
+   "gridPos": {
+    "x": 0,
+    "y": 36,
+    "w": 24,
+    "h": 6
+   },
+   "fieldConfig": {
+    "defaults": {
+     "custom": {
+      "lineWidth": 2,
+      "showPoints": "never",
+      "spanNulls": false
+     }
+    },
+    "overrides": []
+   },
+   "options": {
+    "legend": {
+     "displayMode": "list",
+     "placement": "bottom"
+    },
+    "tooltip": {
+     "mode": "multi"
+    }
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "rate(ecoflow_exporter_mqtt_messages_total[1m])*60",
+     "legendFormat": "MQTT msgs/min"
+    },
+    {
+     "refId": "B",
+     "expr": "ecoflow_online",
+     "legendFormat": "online"
+    }
+   ]
+  }
+ ],
+ "tags": [
+  "ecoflow"
+ ]
+}

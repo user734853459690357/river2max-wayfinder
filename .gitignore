@@ -1,0 +1,11 @@
+# Secrets: EcoFlow account login (email, password) and device serial
+ecoflow-monitor/.env
+
+# Local / generated
+.claude/settings.local.json
+.scratch/*/evidence/preview/
+__pycache__/
+*.pyc
+
+# Dealer copies of the reports (full serial number); the committed package/ has it masked
+.scratch/*/evidence/dealer/

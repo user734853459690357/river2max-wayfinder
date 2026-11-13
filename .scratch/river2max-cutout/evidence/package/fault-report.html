@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Fault report – EcoFlow RIVER 2 Max R611••••••••0475</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm; }
+  body { font: 10.5pt/1.45 "Segoe UI", Arial, sans-serif; color: #111; max-width: 180mm; margin: 0 auto; }
+  h1 { font-size: 17pt; margin: 0 0 2mm; }
+  h2 { font-size: 12pt; margin: 6mm 0 2mm; border-bottom: 1px solid #999; padding-bottom: 1mm; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0; }
+  td, th { border: 1px solid #bbb; padding: 1.2mm 2mm; text-align: left; vertical-align: top; }
+  th { background: #eee; }
+  td.n { white-space: normal; }
+  td:first-child { width: 30%; }
+  .meta td:first-child { width: 42mm; background: #f6f6f6; }
+  .fill { background: #fff3b0; }
+  ul, ol { margin: 1mm 0 1mm 6mm; padding: 0; }
+  figure { margin: 4mm 0; page-break-inside: avoid; }
+  figure img { width: 100%; max-height: 118mm; object-fit: contain; }
+  .small { font-size: 9pt; color: #444; }
+  .pb { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<h1>Fault report – EcoFlow RIVER 2 Max</h1>
+<p>Diagnosis: early shutdown and loss of usable battery capacity</p>
+
+<table class="meta">
+  <tr><td>Product</td><td>EcoFlow RIVER 2 Max (EFR610), 512 Wh / 20 Ah LiFePO4</td></tr>
+  <tr><td>Serial number</td><td>R611••••••••0475</td></tr>
+  <tr><td>Report date</td><td>12 November 2026</td></tr>
+  <tr><td>Battery cycle count</td><td>275 (as reported by the unit)</td></tr>
+</table>
+
+<h2>1. Fault summary</h2>
+<ul>
+  <li>The unit <b>switches off completely under load while the display still shows 20–25 %</b>.</li>
+  <li>The measured usable capacity is <b>about 11 Ah, or 55 % of the rated 20 Ah</b>, after 275 cycles. The specification states 80 % or more after 3000 cycles.</li>
+  <li>The fault <b>persists after more than 5 full discharge/recharge cycles</b> (battery calibration).</li>
+  <li>The discharge and charge limits are set to 0–100 % and the firmware is up to date.</li>
+</ul>
+
+<h2>2. Symptoms in normal use</h2>
+<ol>
+  <li>The unit switches off completely (screen dark) while powering a load, at about 25 % displayed charge. With loads above 200 W this happens at about 20 %.</li>
+  <li>When switched back on, it shows a higher charge (25 %, in earlier cases 33 % or 47 %) and runs normally with no load connected.</li>
+  <li>Connecting any load again makes it switch off within seconds. After several attempts the display drops to 0 %.</li>
+  <li>From that point it recharges normally to 100 %.</li>
+  <li>Runtime on the same use has fallen from 3.5–4 hours to about 2.5 hours.</li>
+</ol>
+
+<h2>3. Steps already taken</h2>
+<ul>
+  <li>More than 5 full calibration cycles: discharged until the unit switched itself off, then recharged on AC to 100 % without interruption. There was no improvement.</li>
+  <li>App settings checked: discharge limit 0 %, charge limit 100 %. The firmware is the latest version offered in the app.</li>
+  <li>The unit is used and stored indoors and has not been opened or modified.</li>
+</ul>
+
+<h2>4. Test performed on 11–12 November 2026</h2>
+<p><b>Method:</b> the unit's battery management system (BMS) data was recorded from the EcoFlow account every 5–10 seconds during one complete cycle:</p>
+<ol>
+  <li>Charged on AC to 100 %.</li>
+  <li>Discharged with a computer load (about 250 W on average) until the unit switched itself off.</li>
+  <li>Switched back on and loaded again with light loads (4–62 W) until the display showed 0 %.</li>
+  <li>Recharged on AC to 100 % without interruption, with nothing connected.</li>
+</ol>
+
+<table>
+  <tr><th>Time (local)</th><th>Event</th><th>Displayed charge</th><th>Avg cell voltage</th><th>Load</th></tr>
+  <tr><td>23:39</td><td>Charger disconnected, discharge starts</td><td>100 %</td><td>3.31 V</td><td>—</td></tr>
+  <tr><td>00:46:50</td><td><b>Unit switches off (1)</b></td><td>23 % (25 % after restart)</td><td>3.00 V at 12 A</td><td>≈ 235 W</td></tr>
+  <tr><td>01:03:10</td><td><b>Unit switches off (2)</b></td><td>24 % (25 % after restart)</td><td>3.06 V at 2 A</td><td>≈ 62 W</td></tr>
+  <tr><td>01:15 – 02:06</td><td>5 more restarts; each switches off within 5–20 s under load</td><td>25 % each time</td><td>3.07–3.08 V</td><td>4–62 W</td></tr>
+  <tr><td>≈ 02:07</td><td>Display drops to 0 %</td><td>0 %</td><td>3.08 V at rest</td><td>—</td></tr>
+  <tr><td>02:11 – 02:46</td><td>AC recharge, 0 → 100 % in 35 minutes</td><td>0 → 100 %</td><td>→ 3.34 V</td><td>≈ 600 W input</td></tr>
+</table>
+
+<h2>5. Results</h2>
+<table>
+  <tr><th>Quantity</th><th>Measured</th><th>Reference</th></tr>
+  <tr><td>Charge delivered, 100 % → shutdown</td><td class="n">≈ 11.2 Ah (≈ 281 Wh at the battery, 275 Wh at the outputs)</td><td>20 Ah / 512 Wh rated</td></tr>
+  <tr><td>Charge accepted, 0 % → 100 %</td><td class="n">≈ 11.0 Ah (≈ 298 Wh at the battery, 348 Wh from the wall)</td><td>20 Ah / 512 Wh rated</td></tr>
+  <tr><td>Usable capacity vs rated</td><td class="n"><b>≈ 55 %</b></td><td>≥ 80 % after 3000 cycles (specification)</td></tr>
+  <tr><td>Full capacity reported by the BMS</td><td class="n">17.46 Ah (87 %)</td><td>—</td></tr>
+  <tr><td>State of health reported by the BMS</td><td class="n">97 %</td><td>—</td></tr>
+  <tr><td>Cycle count</td><td class="n">275</td><td>3000 rated</td></tr>
+  <tr><td>Cell temperature during discharge</td><td class="n">26–35 °C</td><td>−10 to 45 °C allowed</td></tr>
+</table>
+
+<h2>6. Assessment</h2>
+<ul>
+  <li><b>The battery holds only about 55 % of its rated capacity.</b> The discharge and the recharge measurements agree at about 11 Ah.</li>
+  <li><b>The usable range ends early at both the bottom and the top.</b>
+    <ul>
+      <li>At the bottom, the unit reported 0 % with an average resting cell voltage of 3.08 V.</li>
+      <li>At the top, charging ended at an average cell voltage of only 3.49 V, and the displayed charge jumped from 44 % to 99 % in 9 minutes at a constant 19 A (Figure 4).</li>
+    </ul>
+    This pattern indicates that one or more cells with reduced capacity are limiting the whole series pack. <b>A defective cell is suspected.</b> The unit reports only an average cell voltage, so the individual cell cannot be identified from outside.</li>
+  <li><b>The battery management system still assumes about 17.5 Ah.</b> This is why the display shows 20–25 % when the unit switches off, and why it reads 25 % again after each restart.</li>
+  <li><b>This is not consistent with normal wear.</b> The unit has used 275 of its 3000 rated cycles (9 %) but has lost about 45 % of its capacity. Its own BMS reports a state of health of 97 %.</li>
+  <li>Settings, firmware, temperature and calibration have been ruled out (Section 3).</li>
+</ul>
+
+
+<div class="pb"></div>
+<h2>Figures</h2>
+<figure><img src="fig1-session-overview.png" alt="Figure 1"></figure>
+<figure><img src="fig2-discharge.png" alt="Figure 2"></figure>
+<figure><img src="fig3-shutdown-closeup.png" alt="Figure 3"></figure>
+<figure><img src="fig4-recharge.png" alt="Figure 4"></figure>
+<figure><img src="fig5-capacity.png" alt="Figure 5"></figure>
+<p class="small">All values are as reported by the unit's own battery management system. The current is reported in whole amperes, so the capacity figures are accurate to about ±5 %. The short gaps in the curves are periods when the unit was switched off. The full recorded data is available on request.</p>
+
+</body>
+</html>

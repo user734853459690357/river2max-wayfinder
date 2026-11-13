@@ -1,0 +1,44 @@
+# River 2 Max Test Cycle monitoring: exporter (MQTT, account login) + Prometheus (5 s) + Grafana.
+# Credentials: .env (email, password, serial), chmod 600, git-ignored, never in this file.
+# Up: docker compose up -d   Down: docker compose down   (data is kept in named volumes)
+name: ecoflow-monitor
+services:
+  exporter:
+    image: tess1o/go-ecoflow-exporter:2.0.0
+    container_name: ecoflow_exporter
+    restart: unless-stopped
+    ports: ["127.0.0.1:2112:2112"]
+    environment:
+      EXPORTER_TYPE: mqtt      # pinned: never fall back to REST
+      ECOFLOW_EMAIL: ${ECOFLOW_EMAIL:?set in .env}
+      ECOFLOW_DEVICES: ${ECOFLOW_DEVICES:?set in .env}
+      ECOFLOW_DEVICES_PRETTY_NAMES: '{"${ECOFLOW_DEVICES}":"River 2 Max"}'
+      ECOFLOW_PASSWORD: ${ECOFLOW_PASSWORD:?set in .env}
+      MQTT_STATE_REFRESH_INTERVAL_SECONDS: "10"   # the unit pushes almost nothing unprompted; ask for a full snapshot every 10 s
+      LOG_LEVEL: info
+  prometheus:
+    image: prom/prometheus:v3.5.0
+    container_name: ecoflow_prometheus
+    restart: unless-stopped
+    command: ["--config.file=/etc/prometheus/prometheus.yml", "--storage.tsdb.retention.time=90d", "--web.enable-admin-api"]
+    ports: ["127.0.0.1:9090:9090"]
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+  grafana:
+    image: grafana/grafana:12.1.0
+    container_name: ecoflow_grafana
+    restart: unless-stopped
+    ports: ["127.0.0.1:3000:3000"]
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"     # localhost-only, single user
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
+      GF_AUTH_DISABLE_LOGIN_FORM: "true"
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/river2max.json
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana-data:/var/lib/grafana
+volumes:
+  prometheus-data:
+  grafana-data:
